@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
         CheckSharedMem();
     });
     CheckSharedMem();
-//    _timer->start();
+    _timer->start();
 }
 
 MainWindow::~MainWindow()

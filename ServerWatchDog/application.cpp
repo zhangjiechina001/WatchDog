@@ -11,7 +11,6 @@
 #include "cleanmem.h"
 #include "license.h"
 
-#define APPLICATION_NAME    "LIBS_App_Server.exe"
 #define APPLICATION_KEY     "LIBSAppServerAlreadyRunning"
 #define APP_WATCHDOG_CYCLE  25
 #define SHUT_DOWN_APP_CODE  126
@@ -26,19 +25,8 @@ Application::Application(int &argc, char **argv) :
     timeCount = 0;
     int checkInterval = 5000;
     qDebug()<<"~~~~~~~~~~~~~~~~~~~start~~~~~~~~~~~~~~~~~~~~~~~~";
-    qDebug()<<"watchDog begin work for "<<APPLICATION_NAME<<" ... ";
 
 
-    QString filePath = "E:\\Projects\\WatchDog\\Demo\\bin_vs\\Demo.exe";
-    QFile file(filePath);
-    if (!file.exists()) {
-        qDebug() << QString("Program file %1 does not exist.").arg(filePath);
-        QCoreApplication::quit();
-    }
-
-    m_process.setWorkingDirectory("E:/Projects/WatchDog/bin_vs/");
-    m_process.setProgram(filePath);
-    m_process.closeReadChannel(QProcess::StandardOutput);
     m_process.close();
 
     mem.setKey("LIBSAppServerAlreadyRunning");
