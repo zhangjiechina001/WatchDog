@@ -50,7 +50,6 @@ public:
 private slots:
     void periodDetecte();
 private:
-    void clearLogs();
     bool checkLicense() ;
 protected:
     void timerEvent(QTimerEvent *event);

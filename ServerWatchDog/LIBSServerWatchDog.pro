@@ -14,7 +14,7 @@ TEMPLATE = app
 win32 {
     CONFIG(release, debug|release):QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 }
-DESTDIR = $$PWD/../bin_vs
+DESTDIR = $$PWD/bin_vs
 
 mingw:{
     DEFINES += USING_QT_MINGW
@@ -29,15 +29,20 @@ INSTALLS += target
 
 
 SOURCES += main.cpp \
-    application.cpp
+    application.cpp \
+    mainwindow.cpp
 
 HEADERS  += \
     application.h \
-    cleanmem.h
+    cleanmem.h \
+    mainwindow.h
 
 RESOURCES += \
     res.qrc
 
 CONFIG(debug, debug|release): VERSION = 1.0.2.1
 CONFIG(release, debug|release) : VERSION = 1.0.2.0
+
+FORMS += \
+    mainwindow.ui
 
