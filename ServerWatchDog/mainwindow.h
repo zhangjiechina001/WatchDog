@@ -2,11 +2,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
 #include "watchdogitem.h"
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QLayoutItem>
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -26,7 +26,7 @@ protected:
 private:
     QSystemTrayIcon* CreateTrayIcon();
 
-    QLayoutItem* AddLayout(QString name);
+    QLabel* AddLayout(QString name);
 
 private slots:
     void Log(QString log);

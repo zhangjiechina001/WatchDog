@@ -16,7 +16,9 @@ private:
 
 public:
     static WatchDogManager& Instance();
+    void WaitForEnd();
 
+    WatchDogItem* GetItem(QString key);
     QList<QString> Keys();
 
 signals:

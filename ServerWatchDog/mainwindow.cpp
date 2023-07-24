@@ -1,7 +1,8 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
-
+#include <QLabel>
+#include <tuple>
 #include "Log/logger.h"
 #include "watchdogmanager.h"
 
@@ -16,14 +17,28 @@ MainWindow::MainWindow(QWidget *parent) :
     _trayIcon->show();
 
     WatchDogManager::Instance();
-    AddLayout("LIBS2700服务端");
-    AddLayout("LIBS2700控制软件");
+    for(QString key:WatchDogManager::Instance().Keys())
+    {
+        QLabel* label=AddLayout(key);
+        WatchDogItem *watchDog=WatchDogManager::Instance().GetItem(key);
+        connect(watchDog,&WatchDogItem::StatusChanged,this,[label](WatchDogItem::Status satus)
+        {
+            QMap<WatchDogItem::Status,QString> map={
+                {WatchDogItem::Status::Off,"关闭,gray"},
+                {WatchDogItem::Status::Block,"无响应,red"},
+                {WatchDogItem::Status::Running,"运行,green"},
+            };
+            QString val=map[satus];
+            label->setText(val.split(",").at(0));
+            label->setStyleSheet(QString("background-color:%1;border: 1px solid black;qproperty-alignment: 'AlignCenter';").arg(val.split(",").at(1)));
+        });
+    }
     ui->verticalLayout->addItem(new QSpacerItem(20, 209, QSizePolicy::Minimum, QSizePolicy::Expanding));
 }
 
 MainWindow::~MainWindow()
 {
-//    delete _watchDog;
+    WatchDogManager::Instance().deleteLater();
     delete ui;
 }
 
@@ -55,7 +70,7 @@ QSystemTrayIcon *MainWindow::CreateTrayIcon()
     {
         _trayIcon->setVisible(false);
         this->close();
-        qApp->quit();
+        WatchDogManager::Instance().WaitForEnd();
         qDebug()<<"程序关闭！";
     });
     trayIconMenu->addAction(quitAction);
@@ -67,7 +82,7 @@ QSystemTrayIcon *MainWindow::CreateTrayIcon()
     return trayIcon;
 }
 
-QLayoutItem* MainWindow::AddLayout(QString name)
+QLabel* MainWindow::AddLayout(QString name)
 {
     auto *hLayout = new QHBoxLayout();
     QLabel *lblStatus = new QLabel(ui->widget);
@@ -85,7 +100,7 @@ QLayoutItem* MainWindow::AddLayout(QString name)
     hLayout->addWidget(lblText);
 
     ui->verticalLayout->addItem(hLayout);
-    return hLayout;
+    return lblStatus;
 }
 
 void MainWindow::Log(QString log)

@@ -1,4 +1,5 @@
-﻿#ifndef MAINWINDOW_H
+﻿#pragma execution_character_set("utf-8")
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -19,6 +20,8 @@ public:
 
 private slots:
     void CheckSharedMem();
+
+    void on_checkBox_clicked(bool checked);
 
 private:
     Ui::MainWindow *ui;
