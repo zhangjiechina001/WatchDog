@@ -26,7 +26,7 @@ protected:
 private:
     QSystemTrayIcon* CreateTrayIcon();
 
-    QLayoutItem* CreateLayout(QString name);
+    QLayoutItem* AddLayout(QString name);
 
 private slots:
     void Log(QString log);
