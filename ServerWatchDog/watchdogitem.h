@@ -3,6 +3,10 @@
 
 #include <QObject>
 #include <QSharedMemory>
+#include <QSystemTrayIcon>
+#include <QProcess>
+#include <QDateTime>
+#include <QTimer>
 
 class WatchDogItem : public QObject
 {
@@ -10,14 +14,21 @@ class WatchDogItem : public QObject
 public:
     explicit WatchDogItem(QObject *parent = nullptr);
 
-    static void InitProgress();
-     void StartProgram();
+    void InitProgress();
+    bool StartProgram();
 signals:
 
 public slots:
+    void periodDetecte();
 
 private:
-     QSharedMemory mem;
+    QProcess  m_process;
+    QSharedMemory mem;
+    QDateTime   m_startTime;
+    QSystemTrayIcon  m_systemTrayIcon;
+    int timeCount;
+    volatile  bool m_isRestarting;
+    QTimer _timer;
 };
 
 #endif // WATCHDOGITEM_H
