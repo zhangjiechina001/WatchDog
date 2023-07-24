@@ -3,30 +3,35 @@
 #include <QProcess>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QFileInfo>
+#include <QDir>
 
 #define APP_WATCHDOG_CYCLE  25
 #define SHUT_DOWN_APP_CODE  126
 
-WatchDogItem::WatchDogItem(QObject *parent) : QObject(parent),
-    _timer(),
-    mem("LIBSAppServerAlreadyRunning")
+
+WatchDogItem::WatchDogItem(QString programPath, QString memoryKey, QObject *parent):QObject(parent),
+    _programPath(programPath),
+    m_process(),
+    mem(memoryKey),
+    _timer()
 {
-    InitProgress();
+    InitProgress(_programPath);
     StartProgram();
     connect(&_timer,&QTimer::timeout,this,&WatchDogItem::periodDetecte);
     _timer.setInterval(5*1000);
     _timer.start();
 }
 
-void WatchDogItem::InitProgress()
+void WatchDogItem::InitProgress(QString filePath)
 {
-    QString filePath = "E:\\Projects\\WatchDog\\Demo\\bin_vs\\Demo.exe";
-    QFile file(filePath);
-    if (!file.exists()) {
+    QFileInfo fileInfo(filePath);
+    if (!fileInfo.exists()) {
         qDebug() << QString("Program file %1 does not exist.").arg(filePath);
+        return;
     }
 
-    m_process.setWorkingDirectory("E:/Projects/WatchDog/bin_vs/");
+    m_process.setWorkingDirectory(fileInfo.dir().absolutePath());
     m_process.setProgram(filePath);
     m_process.closeReadChannel(QProcess::StandardOutput);
 }

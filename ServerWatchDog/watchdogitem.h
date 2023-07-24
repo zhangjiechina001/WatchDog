@@ -12,9 +12,8 @@ class WatchDogItem : public QObject
 {
     Q_OBJECT
 public:
-    explicit WatchDogItem(QObject *parent = nullptr);
-
-    void InitProgress();
+    WatchDogItem(QString programPath,QString memoryKey,QObject *parent=nullptr);
+    void InitProgress(QString filePath);
     bool StartProgram();
 signals:
 
@@ -28,6 +27,9 @@ private:
     int timeCount;
     volatile  bool m_isRestarting;
     QTimer _timer;
+
+    QString _programPath;
+    QString _memoryKey;
 };
 
 #endif // WATCHDOGITEM_H

@@ -21,18 +21,20 @@ msvc:{
 INSTALLS += target
 
 include(./Log/Log.pri)
-
+include(./Utils/Utils.pri)
 
 SOURCES += main.cpp \
     application.cpp \
     mainwindow.cpp \
-    watchdogitem.cpp
+    watchdogitem.cpp \
+    watchdogmanager.cpp
 
 HEADERS  += \
     application.h \
     cleanmem.h \
     mainwindow.h \
-    watchdogitem.h
+    watchdogitem.h \
+    watchdogmanager.h
 
 RESOURCES += \
     res.qrc
@@ -40,4 +42,7 @@ RESOURCES += \
 
 FORMS += \
     mainwindow.ui
+
+DISTFILES += \
+    WatchDogManager.json
 

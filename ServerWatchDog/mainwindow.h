@@ -6,6 +6,7 @@
 #include "watchdogitem.h"
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QLayoutItem>
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +25,8 @@ protected:
 
 private:
     QSystemTrayIcon* CreateTrayIcon();
+
+    QLayoutItem* CreateLayout(QString name);
 
 private slots:
     void Log(QString log);
