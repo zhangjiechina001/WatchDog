@@ -25,7 +25,6 @@ private:
     QProcess  m_process;
     QSharedMemory mem;
     QDateTime   m_startTime;
-    QSystemTrayIcon  m_systemTrayIcon;
     int timeCount;
     volatile  bool m_isRestarting;
     QTimer _timer;

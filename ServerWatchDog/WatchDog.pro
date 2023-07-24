@@ -20,6 +20,8 @@ msvc:{
 
 INSTALLS += target
 
+include(./Log/Log.pri)
+
 
 SOURCES += main.cpp \
     application.cpp \

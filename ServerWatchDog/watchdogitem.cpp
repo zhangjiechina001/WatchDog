@@ -9,7 +9,6 @@
 
 WatchDogItem::WatchDogItem(QObject *parent) : QObject(parent),
     _timer(),
-    m_systemTrayIcon(QIcon(":/dog.png"), this),
     mem("LIBSAppServerAlreadyRunning")
 {
     InitProgress();
@@ -35,6 +34,7 @@ void WatchDogItem::InitProgress()
 bool WatchDogItem::StartProgram()
 {
     bool appIsRunning = false;
+
     if (mem.create(1)) {
         qDebug() << "create mem";
         mem.detach();
@@ -49,9 +49,6 @@ bool WatchDogItem::StartProgram()
         m_process.start(QProcess::WriteOnly);
         appIsRunning = true;
         m_startTime = QDateTime::currentDateTime();
-        m_systemTrayIcon.setToolTip(QStringLiteral("LIBS_App_Server程序"));
-        m_systemTrayIcon.show();
-        m_systemTrayIcon.showMessage(QStringLiteral("开始运行"), QStringLiteral("LIBS_App_Server程序"));
     } else {
         qDebug()<<"start Program failed, because the program is not exit or already running.";
     }

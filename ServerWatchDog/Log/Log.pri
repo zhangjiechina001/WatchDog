@@ -1,0 +1,2 @@
+HEADERS += \
+    $$PWD/logger.h
