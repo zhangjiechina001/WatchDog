@@ -24,11 +24,10 @@ WatchDogItem::~WatchDogItem()
 void WatchDogItem::WaitForEnd()
 {
     _timer.stop();
-    _timer.deleteLater();
     _mem.detach();
     m_process.kill();
-    qDebug()<<__FUNCTION__<<__LINE__;
     m_process.waitForFinished();
+    qDebug()<<__FUNCTION__<<__LINE__;
 }
 
 
@@ -37,6 +36,7 @@ void WatchDogItem::SetConfig(QJsonObject obj)
     InitProcess(obj["ProgramPath"].toString());
     _mem.setKey(obj["MemoryKey"].toString());
     qDebug()<<__FUNCTION__<<__LINE__<<_mem.create(1);
+
     connect(&_timer,&QTimer::timeout,this,&WatchDogItem::periodDetecte);
     _timer.setInterval(obj["Internal"].toInt()*1000);
     _timer.start();
@@ -79,7 +79,6 @@ bool WatchDogItem::SetMemData(int val)
     char* data = (char*)_mem.data();
     data[0]=val;
     _mem.unlock();
-
     return true;
 }
 
@@ -101,18 +100,20 @@ void WatchDogItem::periodDetecte()
         SetMemData(count+1);
         emit StatusChanged(count>1?Status::Block:Status::Running);
 
-        if (m_process.state() == QProcess::Running) {
-
+        if (m_process.state() == QProcess::Running)
+        {
             // 进程在运行，但是程序已经阻塞,此时需要重启程序
-            if (count > APP_WATCHDOG_CYCLE) {
+            if (count > APP_WATCHDOG_CYCLE)
+            {
                 SetMemData(0);
                 qCritical()<<"application non response deteceted. so we will kill and restart it.";
-                m_isRestarting = true;
                 m_process.kill();
                 m_process.waitForFinished();
-                m_isRestarting = false;
             }
-        } else if (m_process.state() == QProcess::NotRunning) { // 程序不由看门狗控制，此时让程序自己关掉
+        }
+        else if (m_process.state() == QProcess::NotRunning)
+        {
+            //程序不由看门狗控制，此时让程序自己关掉
             emit StatusChanged(Status::Off);
             StartProgram();
         }
@@ -123,7 +124,9 @@ void WatchDogItem::periodDetecte()
         {
             StartProgram();
             qDebug()<<"try to start application agin. ";
-        } else {
+        }
+        else
+        {
             qDebug()<<"attach the shared memory failed!"<< _mem.error() << _mem.errorString();
         }
     }

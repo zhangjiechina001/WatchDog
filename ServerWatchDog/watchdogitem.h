@@ -33,6 +33,7 @@ public:
 
     void InitProcess(QString filePath);
     bool StartProgram();
+
 signals:
     void StatusChanged(Status currentStatus);
 
@@ -44,7 +45,6 @@ private:
 
     QDateTime   m_startTime;
     int timeCount;
-    volatile  bool m_isRestarting;
     QTimer _timer;
 
     QString _programPath;
