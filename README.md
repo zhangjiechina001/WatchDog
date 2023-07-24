@@ -14,3 +14,23 @@
     }
 }
 ```
+3.QSharedMemory哪个程序创建就不需要detach()和attach()了，只需要在读取数据时进行lock()和unlock()即可
+```C++
+bool WatchDogItem::SetMemData(int val)
+{
+    _mem.lock();
+    char* data = (char*)_mem.data();
+    data[0]=val;
+    _mem.unlock();
+    return true;
+}
+
+int WatchDogItem::GetMemData()
+{
+    _mem.lock();
+    char* data = (char*)_mem.data();
+    int count = data[0];
+    _mem.unlock();
+    return count;
+}
+```
