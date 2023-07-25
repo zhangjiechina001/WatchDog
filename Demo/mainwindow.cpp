@@ -6,7 +6,6 @@ QSharedMemory MainWindow::m_sharedMem;
 
 void MainWindow::CheckSharedMem()
 {
-
     qDebug()<<__FUNCTION__<<__LINE__;
     if(!m_sharedMem.attach())
     {

@@ -6,7 +6,7 @@
 
 QT       += core gui network websockets widgets
 
-TARGET = LIBS_App_ServerWatchDog
+TARGET = WatchDog
 TEMPLATE = app
 
 win32 {
@@ -38,6 +38,8 @@ HEADERS  += \
 
 RESOURCES += \
     res.qrc
+
+RC_ICONS=dog2.ico
 
 
 FORMS += \

@@ -77,7 +77,7 @@ QSystemTrayIcon *MainWindow::CreateTrayIcon()
 
     auto trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setIcon(QIcon(":/dog.png"));
+    trayIcon->setIcon(QIcon(":/dog2.ico"));
     trayIcon->setToolTip("看门狗程序");
     return trayIcon;
 }

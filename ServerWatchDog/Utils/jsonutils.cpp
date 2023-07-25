@@ -21,13 +21,13 @@ bool JsonUtils::ReadJsonFile(const QString &fn, QJsonObject &jsonObj)
 
 bool JsonUtils::LoadJsonObject(const QString title, QJsonObject &jsonObj,bool updateFromJsonobj)
 {
+
+    QDir dir("./Config");
+    if(!dir.exists())
     {
-        QDir dir("./Config");
-        if(!dir.exists())
-        {
-            QDir dir1;
-            qDebug()<<"Create ./Config dir "<<(dir1.mkdir("./Config/")?"success":"fail");
-        }
+        QDir dir1;
+        qDebug()<<"Create ./Config dir "<<(dir1.mkdir("./Config/")?"success":"fail");
+    }
 
     QString fn="./Config/"+title+".json";
     TryCreateFile(jsonObj,fn);

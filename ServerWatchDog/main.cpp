@@ -6,22 +6,26 @@
 #include <QApplication>
 #include "mainwindow.h"
 
-//static void AutoRunWithSystem(bool bAutoRun)
-//{
-//    QSettings reg("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",QSettings::NativeFormat);
-//    if (bAutoRun) {
-//        QString strAppPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + "/watchDog.exe");
-//        qDebug() << "strAppPath:" << strAppPath;
-//        reg.setValue("LiveCamera_AutoRun", strAppPath);
-//    } else {
-//        reg.setValue("LiveCamera_AutoRun", "");
-//    }
-//}
+static void AutoRunWithSystem(bool bAutoRun)
+{
+    // 获取当前程序路径
+    QString appPath = QApplication::applicationFilePath();
+
+    // 将当前程序添加到开机启动项
+    QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+    settings.setValue("MyApp", appPath);
+    qDebug()<<"auto start:"<<appPath;
+}
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    // 设置应用程序图标
+    QIcon icon(":/dog.ico");
+    QApplication::setWindowIcon(icon);
+
+    AutoRunWithSystem(true);
     //创建共享内存,判断是否已经运行程序
 //    QSharedMemory mem("cameraWatchDogAlreadyRunning");
 //    if (!mem.create(1)) {
@@ -48,6 +52,7 @@ int main(int argc, char *argv[])
 //    a.startProgram();
 
     MainWindow win;
+    win.setWindowIcon(icon);
     win.show();
     return a.exec();
 }
