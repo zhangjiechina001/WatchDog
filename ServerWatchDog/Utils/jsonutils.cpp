@@ -24,8 +24,8 @@ bool JsonUtils::LoadJsonObject(const QString title, QJsonObject &jsonObj,bool up
     QDir dir("./Config");
     if(!dir.exists())
     {
-        dir.mkdir("./Config");
-        qDebug()<<"Create ./Config dir";
+        QDir dir1;
+        qDebug()<<"Create ./Config dir "<<(dir1.mkdir("./Config/")?"success":"fail");
     }
 
     QString fn="./Config/"+title+".json";
