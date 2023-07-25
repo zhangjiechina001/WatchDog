@@ -5,15 +5,18 @@
 #include <QTextCodec>
 #include <QApplication>
 #include "mainwindow.h"
+#include <Log/logger.h>
 
 static void AutoRunWithSystem(bool bAutoRun)
 {
     // 获取当前程序路径
-    QString appPath = QApplication::applicationFilePath();
+    QString appPath = QCoreApplication::applicationDirPath()+"/WatchDog.exe";
 
     // 将当前程序添加到开机启动项
-    QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-    settings.setValue("MyApp", appPath);
+    QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+//    appPath = appPath + " /autorun";
+    appPath=appPath.replace("/","\\");
+    settings.setValue("MyWatchDog", appPath);
     qDebug()<<"auto start:"<<appPath;
 }
 
@@ -21,35 +24,14 @@ static void AutoRunWithSystem(bool bAutoRun)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+    qInstallMessageHandler(Logger::CustomMessageHandler);
     // 设置应用程序图标
     QIcon icon(":/dog.ico");
     QApplication::setWindowIcon(icon);
 
     AutoRunWithSystem(true);
-    //创建共享内存,判断是否已经运行程序
-//    QSharedMemory mem("cameraWatchDogAlreadyRunning");
-//    if (!mem.create(1)) {
-//        return 0;
-//    }
-//    Application a(argc, argv);
-
-//    a.setApplicationName("cameraWatchDog");
-//    a.setApplicationDisplayName("cameraWatchDog");
-
-//    QString path = QCoreApplication::applicationDirPath() + "/LiveIpCamera.ini";
-//    QSettings settings(path, QSettings::IniFormat);
-//    QTextCodec *tc = QTextCodec::codecForName("utf-8");
-//    settings.setIniCodec(tc);
-//    settings.beginGroup("run");
-//    bool autoRun = settings.value("watchdogautoRun", false).toBool();
-//    if (autoRun) {
-//         AutoRunWithSystem(false); //程序自启动
-//         settings.setValue("watchdogautoRun", false);
-//    }else {
-//        AutoRunWithSystem(false);
-//   }
-//    settings.endGroup();
-//    a.startProgram();
+    qDebug()<<"Auto Restart!";
 
     MainWindow win;
     win.setWindowIcon(icon);

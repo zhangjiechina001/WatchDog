@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qInstallMessageHandler(Logger::CustomMessageHandler);
+
     connect(&Logger::Instance(),SIGNAL(OnLogging(QString)),this,SLOT(Log(QString)));
     _trayIcon=CreateTrayIcon();
     _trayIcon->show();

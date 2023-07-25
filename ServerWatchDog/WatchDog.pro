@@ -9,9 +9,9 @@ QT       += core gui network websockets widgets
 TARGET = WatchDog
 TEMPLATE = app
 
-win32 {
-    CONFIG(release, debug|release):QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
-}
+#win32 {
+#    CONFIG(release, debug|release):QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
+#}
 DESTDIR = $$PWD/bin_vs
 
 msvc:{
