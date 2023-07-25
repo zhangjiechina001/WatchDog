@@ -16,6 +16,8 @@ public:
 
     static void WaitMs(int time);
 
+    static void AutoRunWithSystem();
+
 private:
 //    static QString sharedMemoryKey;
 

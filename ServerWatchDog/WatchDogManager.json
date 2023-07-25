@@ -1,8 +1,11 @@
 ﻿{
-    "LIBS2700Server1": {
-        "Enable":true,
-        "ProgramPath":"E:\\Projects\\WatchDog\\Demo\\bin_vs\\Demo.exe",
-        "MemoryKey":"LIBSAppServerAlreadyRunning",
-        "Internal":3
-    }
+    "Items":{
+        "LIBS2700Server1": {
+            "Enable":true,
+            "ProgramPath":"E:\\Projects\\WatchDog\\Demo\\bin_vs\\Demo.exe",
+            "MemoryKey":"LIBSAppServerAlreadyRunning",
+            "Internal":3
+        }
+    },
+    "AutoRun":false
 }

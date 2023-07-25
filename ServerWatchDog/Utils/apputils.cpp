@@ -5,6 +5,7 @@
 #include <QProcess>
 #include <QElapsedTimer>
 #include <QCoreApplication>
+#include <QSettings>
 
 AppUtils::AppUtils(QObject *parent) : QObject(parent)
 {
@@ -62,5 +63,16 @@ void AppUtils::WaitMs(int time)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 300);
     }
     qDebug()<<"结束等待";
+}
+
+void AppUtils::AutoRunWithSystem()
+{
+    // 获取当前程序路径
+    QString appPath = QCoreApplication::applicationDirPath()+"/WatchDog.exe";
+    // 将当前程序添加到开机启动项
+    QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+    appPath=appPath.replace("/","\\");
+    settings.setValue("MyWatchDog", appPath);
+    qDebug()<<"auto start:"<<appPath;
 }
 

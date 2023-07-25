@@ -5,6 +5,7 @@
 #include <QJsonObject>
 
 #include "watchdogitem.h"
+#include "apputils.h"
 
 class WatchDogManager : public QObject
 {

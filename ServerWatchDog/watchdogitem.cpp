@@ -11,7 +11,7 @@
 #define SHUT_DOWN_APP_CODE  126
 
 
-WatchDogItem::WatchDogItem(QObject *parent):QObject(parent),
+WatchDogItem::WatchDogItem(QObject *parent):SimpleWatchDogItem(parent),
     m_process(),
     _timer()
 {
@@ -33,36 +33,30 @@ void WatchDogItem::WaitForEnd()
 
 void WatchDogItem::SetConfig(QJsonObject obj)
 {
-    InitProcess(obj["ProgramPath"].toString());
+    SimpleWatchDogItem::SetConfig(obj);
     _mem.setKey(obj["MemoryKey"].toString());
     qDebug()<<__FUNCTION__<<__LINE__<<_mem.create(1);
-
-    connect(&_timer,&QTimer::timeout,this,&WatchDogItem::periodDetecte);
-    _timer.setInterval(obj["Internal"].toInt()*1000);
-    _timer.start();
 }
 
-void WatchDogItem::SetName(QString name)
+void WatchDogItem::CheckStatus()
 {
-    _name=name;
-}
+    SimpleWatchDogItem::CheckStatus();
+    if (_mem.isAttached()) {
+        int count = GetMemData();
+        SetMemData(count+1);
+        emit StatusChanged(count>1?Status::Block:Status::Running);
 
-QString WatchDogItem::Name()
-{
-    return _name;
-}
-
-void WatchDogItem::InitProcess(QString filePath)
-{
-    QFileInfo fileInfo(filePath);
-    if (!fileInfo.exists()) {
-        qDebug() << QString("Program file %1 does not exist.").arg(filePath);
-        throw QString("Program file %1 does not exist.");
+        // 进程在运行，但是程序已经阻塞,此时需要重启程序
+        if (count > APP_WATCHDOG_CYCLE)
+        {
+            SetMemData(0);
+            qCritical()<<"application non response deteceted. so we will kill and restart it.";
+            //程序不由看门狗控制，此时让程序自己关掉
+            emit StatusChanged(Status::Off);
+            m_process.kill();
+            m_process.waitForFinished();
+        }
     }
-
-    m_process.setWorkingDirectory(fileInfo.dir().absolutePath());
-    m_process.setProgram(filePath);
-    m_process.closeReadChannel(QProcess::StandardOutput);
 }
 
 bool WatchDogItem::StartProgram()
@@ -90,8 +84,6 @@ int WatchDogItem::GetMemData()
     _mem.unlock();
     return count;
 }
-
-
 
 void WatchDogItem::periodDetecte()
 {

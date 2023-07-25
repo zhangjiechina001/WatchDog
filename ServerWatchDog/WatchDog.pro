@@ -27,14 +27,16 @@ SOURCES += main.cpp \
     application.cpp \
     mainwindow.cpp \
     watchdogitem.cpp \
-    watchdogmanager.cpp
+    watchdogmanager.cpp \
+    simplewatchdogitem.cpp
 
 HEADERS  += \
     application.h \
     cleanmem.h \
     mainwindow.h \
     watchdogitem.h \
-    watchdogmanager.h
+    watchdogmanager.h \
+    simplewatchdogitem.h
 
 RESOURCES += \
     res.qrc

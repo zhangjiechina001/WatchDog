@@ -8,8 +8,9 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QTimer>
+#include <simplewatchdogitem.h>
 
-class WatchDogItem : public QObject
+class WatchDogItem : public SimpleWatchDogItem
 {
     Q_OBJECT
 
@@ -25,13 +26,6 @@ public:
     WatchDogItem(QObject *parent=nullptr);
     ~WatchDogItem();
     void WaitForEnd();
-
-    void SetConfig(QJsonObject obj);
-
-    void SetName(QString name);
-    QString Name();
-
-    void InitProcess(QString filePath);
     bool StartProgram();
 
 signals:
@@ -42,8 +36,7 @@ public slots:
 
 private:
     QProcess  m_process;
-
-    QDateTime   m_startTime;
+    QDateTime m_startTime;
     int timeCount;
     QTimer _timer;
 
@@ -54,6 +47,11 @@ private:
 
     bool SetMemData(int val);
     int GetMemData();
+
+    // SimpleWatchDogItem interface
+public slots:
+    void SetConfig(QJsonObject obj) override;
+    void CheckStatus() override;
 };
 
 #endif // WATCHDOGITEM_H

@@ -10,16 +10,21 @@ WatchDogManager::WatchDogManager(QObject *parent) : QObject(parent)
     QJsonObject obj;
     JsonUtils::LoadJsonObject("WatchDogManager",obj);
 
-    for(auto key:obj.keys())
+    QJsonObject items=obj["Items"].toObject();
+    for(auto key:items.keys())
     {
-        QJsonObject objItem=obj[key].toObject();
+        QJsonObject objItem=items[key].toObject();
         WatchDogItem *tmpItem=new WatchDogItem();
         tmpItem->SetConfig(objItem);
         tmpItem->SetName(key);
         _watchDogItems.append(tmpItem);
         qDebug()<<__FUNCTION__<<__LINE__<<key<<"初始化完成";
     }
-    _configObj=obj;
+    if(obj["PowerOnAutoRun"].toBool())
+    {
+        AppUtils::AutoRunWithSystem();
+    }
+    _configObj=items;
 }
 
 WatchDogManager::~WatchDogManager()
