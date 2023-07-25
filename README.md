@@ -34,3 +34,4 @@ int WatchDogItem::GetMemData()
     return count;
 }
 ```
+4.新增SimpleWatchDogItem，只负责程序动态运行监控，不作卡死重启功能，可以满足更多场景
