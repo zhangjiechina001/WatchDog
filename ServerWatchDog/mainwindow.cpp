@@ -20,13 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
     for(QString key:WatchDogManager::Instance().Keys())
     {
         QLabel* label=AddLayout(key);
-        WatchDogItem *watchDog=WatchDogManager::Instance().GetItem(key);
-        connect(watchDog,&WatchDogItem::StatusChanged,this,[label](WatchDogItem::Status satus)
+        SimpleWatchDogItem *watchDog=WatchDogManager::Instance().GetItem(key);
+        connect(watchDog,&SimpleWatchDogItem::StatusChanged,this,[label](SimpleWatchDogItem::Status satus)
         {
-            QMap<WatchDogItem::Status,QString> map={
-                {WatchDogItem::Status::Off,"关闭,gray"},
-                {WatchDogItem::Status::Block,"无响应,red"},
-                {WatchDogItem::Status::Running,"运行,green"},
+            QMap<SimpleWatchDogItem::Status,QString> map={
+                {SimpleWatchDogItem::Status::Off,"关闭,gray"},
+                {SimpleWatchDogItem::Status::Block,"无响应,red"},
+                {SimpleWatchDogItem::Status::Running,"运行,green"},
             };
             QString val=map[satus];
             label->setText(val.split(",").at(0));

@@ -5,6 +5,20 @@
 
 #include "jsonutils.h"
 
+SimpleWatchDogItem * WatchDogManager::CreateItem(QString type)
+{
+    SimpleWatchDogItem *tmpItem=nullptr;
+    if(type=="WatchDogItem")
+    {
+        tmpItem=new WatchDogItem();
+    }
+    else if(type=="SimpleWatchDogItem")
+    {
+        tmpItem=new SimpleWatchDogItem();
+    }
+    return tmpItem;
+}
+
 WatchDogManager::WatchDogManager(QObject *parent) : QObject(parent)
 {
     QJsonObject obj;
@@ -14,7 +28,7 @@ WatchDogManager::WatchDogManager(QObject *parent) : QObject(parent)
     for(auto key:items.keys())
     {
         QJsonObject objItem=items[key].toObject();
-        WatchDogItem *tmpItem=new WatchDogItem();
+        SimpleWatchDogItem *tmpItem = CreateItem(objItem["Type"].toString());
         tmpItem->SetConfig(objItem);
         tmpItem->SetName(key);
         _watchDogItems.append(tmpItem);
@@ -46,7 +60,7 @@ void WatchDogManager::WaitForEnd()
     }
 }
 
-WatchDogItem *WatchDogManager::GetItem(QString key)
+SimpleWatchDogItem *WatchDogManager::GetItem(QString key)
 {
     for(auto item:_watchDogItems)
     {

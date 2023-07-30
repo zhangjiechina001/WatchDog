@@ -19,7 +19,7 @@ public:
     static WatchDogManager& Instance();
     void WaitForEnd();
 
-    WatchDogItem* GetItem(QString key);
+    SimpleWatchDogItem* GetItem(QString key);
     QList<QString> Keys();
 
 signals:
@@ -27,8 +27,9 @@ signals:
 public slots:
 
 private:
-    QList<WatchDogItem*> _watchDogItems;
+    QList<SimpleWatchDogItem*> _watchDogItems;
     QJsonObject _configObj;
+    SimpleWatchDogItem *CreateItem(QString type);
 };
 
 #endif // WATCHDOGMANAGER_H

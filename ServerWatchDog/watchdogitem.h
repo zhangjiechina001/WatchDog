@@ -15,21 +15,11 @@ class WatchDogItem : public SimpleWatchDogItem
     Q_OBJECT
 
 public:
-    enum Status
-    {
-        Off = 0,
-        Block = 1,
-        Running=2,
-    };
-    Q_ENUM(Status)
+
 
     WatchDogItem(QObject *parent=nullptr);
     ~WatchDogItem();
-    void WaitForEnd();
-    bool StartProgram();
-
-signals:
-    void StatusChanged(Status currentStatus);
+    void WaitForEnd() override;
 
 public slots:
     void periodDetecte();

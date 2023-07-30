@@ -10,7 +10,16 @@ class SimpleWatchDogItem : public QObject
 {
     Q_OBJECT
 public:
+    enum Status
+    {
+        Off = 0,
+        Block = 1,
+        Running=2,
+    };
+    Q_ENUM(Status)
+
     explicit SimpleWatchDogItem(QObject *parent = nullptr);
+    virtual void WaitForEnd();
 
     void SetName(QString name);
     QString Name();
@@ -21,6 +30,7 @@ public:
 
     bool StartProgram();
 signals:
+    void StatusChanged(Status currentStatus);
 
 public slots:
     virtual void CheckStatus();

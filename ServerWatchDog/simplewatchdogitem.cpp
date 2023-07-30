@@ -10,6 +10,14 @@ SimpleWatchDogItem::SimpleWatchDogItem(QObject *parent) : QObject(parent),
 
 }
 
+void SimpleWatchDogItem::WaitForEnd()
+{
+    _timer.stop();
+    m_process.kill();
+    m_process.waitForFinished();
+    qDebug()<<__FUNCTION__<<__LINE__;
+}
+
 void SimpleWatchDogItem::SetName(QString name)
 {
     _name=name;
@@ -53,6 +61,12 @@ void SimpleWatchDogItem::CheckStatus()
 {
     if (m_process.state() == QProcess::NotRunning)
     {
+         qDebug()<<__FUNCTION__<<__LINE__<<m_process.state();
+        emit StatusChanged(Status::Off);
         StartProgram();
+    }
+    else
+    {
+        emit StatusChanged(Status::Running);
     }
 }

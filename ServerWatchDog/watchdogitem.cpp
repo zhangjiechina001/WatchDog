@@ -23,11 +23,8 @@ WatchDogItem::~WatchDogItem()
 
 void WatchDogItem::WaitForEnd()
 {
-    _timer.stop();
+    SimpleWatchDogItem::WaitForEnd();
     _mem.detach();
-    m_process.kill();
-    m_process.waitForFinished();
-    qDebug()<<__FUNCTION__<<__LINE__;
 }
 
 
@@ -57,14 +54,6 @@ void WatchDogItem::CheckStatus()
             m_process.waitForFinished();
         }
     }
-}
-
-bool WatchDogItem::StartProgram()
-{
-    m_process.start(QProcess::WriteOnly);
-    m_startTime = QDateTime::currentDateTime();
-    qDebug()<<__FUNCTION__<<__LINE__<<m_startTime;
-    return false;
 }
 
 bool WatchDogItem::SetMemData(int val)
