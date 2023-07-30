@@ -34,10 +34,7 @@ WatchDogManager::WatchDogManager(QObject *parent) : QObject(parent)
         _watchDogItems.append(tmpItem);
         qDebug()<<__FUNCTION__<<__LINE__<<key<<"初始化完成";
     }
-    if(obj["PowerOnAutoRun"].toBool())
-    {
-        AppUtils::AutoRunWithSystem();
-    }
+    AppUtils::AutoRunWithSystem(obj["PowerOnAutoRun"].toBool());
     _configObj=items;
 }
 

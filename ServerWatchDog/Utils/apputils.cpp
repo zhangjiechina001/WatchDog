@@ -65,14 +65,15 @@ void AppUtils::WaitMs(int time)
     qDebug()<<"结束等待";
 }
 
-void AppUtils::AutoRunWithSystem()
+void AppUtils::AutoRunWithSystem(bool autoStart)
 {
     // 获取当前程序路径
     QString appPath = QCoreApplication::applicationDirPath()+"/WatchDog.exe";
     // 将当前程序添加到开机启动项
     QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     appPath=appPath.replace("/","\\");
-    settings.setValue("MyWatchDog", appPath);
+
+    settings.setValue("MyWatchDog", autoStart?appPath:"");
     qDebug()<<"auto start:"<<appPath;
 }
 
