@@ -33,6 +33,16 @@ int main(int argc, char *argv[])
     QIcon icon(":/dog.ico");
     QApplication::setWindowIcon(icon);
 
+    // 加载并应用QSS文件
+    QFile file("./QSS/Ubuntu.qss");  // 使用冒号表示资源路径，也可以是本地文件路径
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QTextStream stream(&file);
+        QString styleSheet = stream.readAll();
+        a.setStyleSheet(styleSheet);
+        file.close();
+    }
+
     MainWindow win;
     win.setWindowIcon(icon);
     win.show();

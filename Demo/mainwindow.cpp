@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <staticmemberdemo.h>
 
 QSharedMemory MainWindow::m_sharedMem;
 
@@ -53,4 +54,9 @@ void MainWindow::on_checkBox_clicked(bool checked)
     {
          _timer->stop();
     }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+//    StaticMemberDemo::Instance();
 }

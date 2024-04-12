@@ -26,10 +26,12 @@ DESTDIR = $$PWD/bin_vs
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    staticmemberdemo.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    staticmemberdemo.h
 
 FORMS += \
         mainwindow.ui
