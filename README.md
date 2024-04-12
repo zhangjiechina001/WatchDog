@@ -36,5 +36,6 @@ int WatchDogItem::GetMemData()
 ```
 4.新增SimpleWatchDogItem，只负责程序动态运行监控，不作卡死重启功能，可以满足更多场景
 ![图片](https://github.com/zhangjiechina001/WatchDog/assets/49397821/0105e1b9-17ac-4126-85d6-d1fdac5f363a)
+
 5.新增配置说明
 ![配置说明](https://github.com/zhangjiechina001/WatchDog/assets/49397821/f1470906-a045-49f1-851d-b95c9f8dd293)
