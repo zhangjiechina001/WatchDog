@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/apputils.h \
     $$PWD/listutils.h \
     $$PWD/fileutils.h \
-    $$PWD/widgetutils.h
+    $$PWD/widgetutils.h \
+    $$PWD/Head.h
 
 SOURCES += \
     $$PWD/jsonutils.cpp \

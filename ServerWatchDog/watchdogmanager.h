@@ -6,6 +6,7 @@
 
 #include "watchdogitem.h"
 #include "apputils.h"
+#include "GlobalVar.h"
 
 class WatchDogManager : public QObject
 {
@@ -28,7 +29,6 @@ public slots:
 
 private:
     QList<SimpleWatchDogItem*> _watchDogItems;
-    QJsonObject _configObj;
     SimpleWatchDogItem *CreateItem(QString type);
 };
 

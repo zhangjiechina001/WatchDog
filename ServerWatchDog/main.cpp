@@ -7,17 +7,6 @@
 #include "mainwindow.h"
 #include <Log/logger.h>
 
-static void AutoRunWithSystem(bool bAutoRun)
-{
-    // 获取当前程序路径
-    QString appPath = QCoreApplication::applicationDirPath()+"/WatchDog.exe";
-    // 将当前程序添加到开机启动项
-    QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-    appPath=appPath.replace("/","\\");
-    settings.setValue("MyWatchDog", appPath);
-    qDebug()<<"auto start:"<<appPath;
-}
-
 
 int main(int argc, char *argv[])
 {
@@ -32,16 +21,6 @@ int main(int argc, char *argv[])
     // 设置应用程序图标
     QIcon icon(":/dog.ico");
     QApplication::setWindowIcon(icon);
-
-    // 加载并应用QSS文件
-    QFile file("./QSS/Ubuntu.qss");  // 使用冒号表示资源路径，也可以是本地文件路径
-    if (file.open(QFile::ReadOnly | QFile::Text))
-    {
-        QTextStream stream(&file);
-        QString styleSheet = stream.readAll();
-        a.setStyleSheet(styleSheet);
-        file.close();
-    }
 
     MainWindow win;
     win.setWindowIcon(icon);

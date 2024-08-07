@@ -5,6 +5,7 @@
 #include <tuple>
 #include "Log/logger.h"
 #include "watchdogmanager.h"
+#include "DialogConfig.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -79,6 +80,14 @@ QSystemTrayIcon *MainWindow::CreateTrayIcon()
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/dog2.ico"));
     trayIcon->setToolTip("看门狗程序");
+
+    connect(trayIcon,&QSystemTrayIcon::activated,this,[this](QSystemTrayIcon::ActivationReason reason){
+        if(reason==QSystemTrayIcon::DoubleClick)
+        {
+            this->showNormal();
+        }
+    });
+
     return trayIcon;
 }
 
@@ -111,4 +120,10 @@ void MainWindow::Log(QString log)
     {
         ui->txtLog->document()->clear();
     }
+}
+
+void MainWindow::on_actionConfig_triggered()
+{
+    DialogConfig d;
+    d.exec();
 }

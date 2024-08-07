@@ -24,7 +24,7 @@ public:
     void SetName(QString name);
     QString Name();
 
-    virtual void SetConfig(QJsonObject obj);
+    virtual void SetConfig(QString appPath, int interval);
 
     void InitProcess(QString filePath);
 
@@ -35,6 +35,10 @@ signals:
 public slots:
     virtual void CheckStatus();
 
+private slots:
+    void onProcessStarted();
+    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onProcessError(QProcess::ProcessError error);
 private:
     QProcess  m_process;
 

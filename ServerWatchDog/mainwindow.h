@@ -31,6 +31,8 @@ private:
 private slots:
     void Log(QString log);
 
+    void on_actionConfig_triggered();
+
 private:
     Ui::MainWindow *ui;
     WatchDogItem *_watchDog;

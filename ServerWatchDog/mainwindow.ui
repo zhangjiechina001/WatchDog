@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>404</height>
+    <width>765</width>
+    <height>489</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,12 +60,29 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>398</width>
-     <height>23</height>
+     <width>765</width>
+     <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>设置</string>
+    </property>
+    <addaction name="actionConfig"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionConfig">
+   <property name="icon">
+    <iconset>
+     <normalon>:/images/配置文件-1种尺寸.ico</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>程序配置</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

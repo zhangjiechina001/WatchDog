@@ -40,7 +40,7 @@ private:
 
     // SimpleWatchDogItem interface
 public slots:
-    void SetConfig(QJsonObject obj) override;
+//    void SetConfig(QJsonObject obj) override;
     void CheckStatus() override;
 };
 

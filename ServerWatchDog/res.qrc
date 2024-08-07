@@ -3,5 +3,6 @@
         <file>dog.png</file>
         <file>ico.ico</file>
         <file>dog2.ico</file>
+        <file>images/配置文件-1种尺寸.ico</file>
     </qresource>
 </RCC>

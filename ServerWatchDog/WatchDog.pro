@@ -28,7 +28,9 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     watchdogitem.cpp \
     watchdogmanager.cpp \
-    simplewatchdogitem.cpp
+    simplewatchdogitem.cpp \
+    DialogConfig.cpp \
+    GlobalVar.cpp
 
 HEADERS  += \
     application.h \
@@ -36,7 +38,9 @@ HEADERS  += \
     mainwindow.h \
     watchdogitem.h \
     watchdogmanager.h \
-    simplewatchdogitem.h
+    simplewatchdogitem.h \
+    DialogConfig.h \
+    GlobalVar.h
 
 RESOURCES += \
     res.qrc
@@ -45,7 +49,8 @@ RC_ICONS=dog2.ico
 
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    DialogConfig.ui
 
 DISTFILES += \
     WatchDogManager.json

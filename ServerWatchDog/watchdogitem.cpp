@@ -28,12 +28,12 @@ void WatchDogItem::WaitForEnd()
 }
 
 
-void WatchDogItem::SetConfig(QJsonObject obj)
-{
-    SimpleWatchDogItem::SetConfig(obj);
-    _mem.setKey(obj["MemoryKey"].toString());
-    qDebug()<<__FUNCTION__<<__LINE__<<_mem.create(1);
-}
+//void WatchDogItem::SetConfig(QJsonObject obj)
+//{
+//    SimpleWatchDogItem::SetConfig(obj);
+//    _mem.setKey(obj["MemoryKey"].toString());
+//    qDebug()<<__FUNCTION__<<__LINE__<<_mem.create(1);
+//}
 
 void WatchDogItem::CheckStatus()
 {

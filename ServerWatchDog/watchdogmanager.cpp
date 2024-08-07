@@ -21,21 +21,17 @@ SimpleWatchDogItem * WatchDogManager::CreateItem(QString type)
 
 WatchDogManager::WatchDogManager(QObject *parent) : QObject(parent)
 {
-    QJsonObject obj;
-    JsonUtils::LoadJsonObject("WatchDogManager",obj);
-
-    QJsonObject items=obj["Items"].toObject();
-    for(auto key:items.keys())
+    WatchDogParam p=GlobalVar::Instance().GetWatchDogParam();
+    qDebug()<<__FUNCTION__<<__LINE__<<p.WatchDogItems.count();
+    for(auto item:p.WatchDogItems)
     {
-        QJsonObject objItem=items[key].toObject();
-        SimpleWatchDogItem *tmpItem = CreateItem(objItem["Type"].toString());
-        tmpItem->SetConfig(objItem);
-        tmpItem->SetName(key);
+        SimpleWatchDogItem *tmpItem = CreateItem("SimpleWatchDogItem");
+        tmpItem->SetName(item.Name);
+        tmpItem->SetConfig(item.APPPath,p.CycleInterval);
         _watchDogItems.append(tmpItem);
-        qDebug()<<__FUNCTION__<<__LINE__<<key<<"初始化完成";
+        qDebug()<<__FUNCTION__<<__LINE__<<item.Name<<"初始化完成";
     }
-    AppUtils::AutoRunWithSystem(obj["PowerOnAutoRun"].toBool());
-    _configObj=items;
+    AppUtils::AutoRunWithSystem(p.IsAutoRun);
 }
 
 WatchDogManager::~WatchDogManager()
@@ -71,5 +67,10 @@ SimpleWatchDogItem *WatchDogManager::GetItem(QString key)
 
 QList<QString> WatchDogManager::Keys()
 {
-    return _configObj.keys();
+    QList<QString> ret;
+    for(auto item:_watchDogItems)
+    {
+        ret.append(item->Name());
+    }
+    return ret;
 }

@@ -30,7 +30,6 @@ void GetLambda(double* lambda)
 {
     *lambda=100;
     lambda++;
-    lambda=200;
 }
 
 int main(int argc, char *argv[])
