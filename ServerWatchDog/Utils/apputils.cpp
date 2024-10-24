@@ -72,21 +72,13 @@ void AppUtils::WaitMs(int time)
 
 void AppUtils::AutoRunWithSystem(bool autoStart)
 {
-    // 获取当前程序路径
-    QString appPath = QApplication::applicationFilePath();
-    // 将当前程序添加到开机启动项
-    QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-    appPath=appPath.replace("/","\\");
-
     if(autoStart)
     {
         addAppToStartup();
-//        settings.setValue("MyWatchDog", appPath);
     }
     else
     {
         removeAppFromStartup();
-//        settings.remove("MyWatchDog");
     }
 
     qDebug()<<"auto start:"<<appPath;
