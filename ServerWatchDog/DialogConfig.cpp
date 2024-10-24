@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include "widgetutils.h"
+#include "apputils.h"
 
 DialogConfig::DialogConfig(QWidget *parent) :
     QDialog(parent),
@@ -145,4 +146,5 @@ QList<WatchDogConfigItem> DialogConfig::GetItems(QTableWidget *table)
 
 void DialogConfig::on_chbAutoRun_clicked()
 {
+    AppUtils::AutoRunWithSystem(ui->chbAutoRun->isChecked());
 }

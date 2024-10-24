@@ -80,8 +80,6 @@ void AppUtils::AutoRunWithSystem(bool autoStart)
     {
         removeAppFromStartup();
     }
-
-    qDebug()<<"auto start:"<<appPath;
 }
 
 // 添加应用程序到开机启动
