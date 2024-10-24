@@ -21,6 +21,9 @@ public:
 private:
 //    static QString sharedMemoryKey;
 
+    static void addAppToStartup();
+    static void removeAppFromStartup();
+
 signals:
 
 public slots:

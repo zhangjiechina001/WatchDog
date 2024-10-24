@@ -27,6 +27,8 @@ private slots:
 
     void on_btnSaveCfg_clicked();
 
+    void on_chbAutoRun_clicked();
+
 private:
     Ui::DialogConfig *ui;
     void SetCommHeader(QTableWidget *table);

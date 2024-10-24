@@ -142,3 +142,7 @@ QList<WatchDogConfigItem> DialogConfig::GetItems(QTableWidget *table)
     }
     return ret;
 }
+
+void DialogConfig::on_chbAutoRun_clicked()
+{
+}

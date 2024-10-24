@@ -6,6 +6,11 @@
 #include <QElapsedTimer>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QApplication>
+#include <QStandardPaths>
+#include <QFile>
+#include <QDir>
+#include <QTemporaryFile>
 
 AppUtils::AppUtils(QObject *parent) : QObject(parent)
 {
@@ -68,12 +73,91 @@ void AppUtils::WaitMs(int time)
 void AppUtils::AutoRunWithSystem(bool autoStart)
 {
     // 获取当前程序路径
-    QString appPath = QCoreApplication::applicationDirPath()+"/WatchDog.exe";
+    QString appPath = QApplication::applicationFilePath();
     // 将当前程序添加到开机启动项
     QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     appPath=appPath.replace("/","\\");
 
-    settings.setValue("MyWatchDog", autoStart?appPath:"");
+    if(autoStart)
+    {
+        addAppToStartup();
+//        settings.setValue("MyWatchDog", appPath);
+    }
+    else
+    {
+        removeAppFromStartup();
+//        settings.remove("MyWatchDog");
+    }
+
     qDebug()<<"auto start:"<<appPath;
+}
+
+// 添加应用程序到开机启动
+void AppUtils::addAppToStartup()
+{
+    // 获取当前运行程序的路径
+   QString targetPath = QCoreApplication::applicationFilePath();
+
+   // 从资源文件读取批处理脚本
+   QFile batchFile(":/mybat.bat");
+   if (!batchFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+       qDebug() << "无法打开资源中的批处理文件。";
+       return;
+   }
+
+   // 读取脚本内容
+   QString scriptContent = batchFile.readAll();
+   batchFile.close();
+
+   // 替换占位符 %1 为实际的目标路径
+   scriptContent.replace("%1", "\"" + targetPath + "\"");
+   scriptContent.replace("%2", "\"" + QString("WatchDog") + "\"");
+
+   // 创建临时批处理文件
+   QTemporaryFile tempBatFile(QDir::temp().absoluteFilePath("CreateStartupShortcut.XXXXXX.bat"));
+   if (!tempBatFile.open()) {
+       qDebug() << "无法创建临时批处理文件。";
+       return;
+   }
+
+   // 将修改后的脚本内容写入临时文件
+   QTextStream out(&tempBatFile);
+   out << scriptContent;
+
+   // 关闭临时批处理文件
+   tempBatFile.close();
+
+   // 使用 QProcess 执行批处理文件
+   QProcess process;
+   process.start("cmd.exe", QStringList() << "/c" << tempBatFile.fileName());
+   process.waitForFinished();
+
+   // 可选：读取输出和错误信息（用于调试）
+   QString output = process.readAllStandardOutput();
+   QString error = process.readAllStandardError();
+   if (!output.isEmpty()) {
+       qDebug() << "输出：" << output;
+   }
+   if (!error.isEmpty()) {
+       qDebug() << "错误：" << error;
+   }
+}
+
+// 移除开机启动
+void AppUtils::removeAppFromStartup()
+{
+    QString startupFolder = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp/";
+    QString shortcutPath = startupFolder + QCoreApplication::applicationName() + ".lnk";
+
+    QFile shortcutFile(shortcutPath);
+    if (shortcutFile.exists()) {
+        if (shortcutFile.remove()) {
+            qDebug() << "Shortcut removed successfully.";
+        } else {
+            qDebug() << "Failed to remove shortcut.";
+        }
+    } else {
+        qDebug() << "Shortcut does not exist.";
+    }
 }
 

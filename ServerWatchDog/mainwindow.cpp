@@ -47,7 +47,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (_trayIcon->isVisible())
     {
-        qDebug()<<__LINE__;
         QIcon icon(":/dog.png");
         _trayIcon->showMessage("提示", "程序仍在后台运行！", icon,1000);
         hide();

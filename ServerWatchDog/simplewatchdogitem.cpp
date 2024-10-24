@@ -62,7 +62,7 @@ bool SimpleWatchDogItem::StartProgram()
 
 void SimpleWatchDogItem::CheckStatus()
 {
-    qDebug()<<_name<<m_process.state();
+//    qDebug()<<_name<<m_process.state();
 
     if (m_process.state() == QProcess::NotRunning)
     {
